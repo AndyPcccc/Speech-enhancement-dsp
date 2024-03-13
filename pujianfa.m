@@ -1,13 +1,13 @@
 clc;
 clear all;
  % 选择干净原始音频文件
-[x fs]=audioread('clean.wav'); 
+[x fs]=audioread('去噪测试音频样本1.wav'); 
 N=length(x);
 x = x(1:N,1);     % 如果是双声道，取单通道
 max_x = max(x);
 
 % 添加含噪语音
-[y fs]=audioread('5dB_noisy.wav');
+[y fs]=audioread('去噪测试音频样本2.wav');
 %sound(y,fs);
 noise_estimated = y(1:1000*fs/1000,1);  %取前1秒做为噪声进行去噪
 
@@ -22,7 +22,7 @@ mag_s(mag_s<0)=0;
 % 恢复
 fft_s = mag_s .* exp(1i.*phase_y);
 s = ifft(fft_s);
-%sound(s,fs);
+sound(s,fs);
 audiowrite('pujian.wav',s,fs);
 subplot(321);plot(x);ylim([-1.5,1.5]);title('原始干净信号');xlabel('时间');ylabel('幅度');
 subplot(323);plot(y);ylim([-1.5,1.5]);title('含噪信号');xlabel('时间');ylabel('幅度');
